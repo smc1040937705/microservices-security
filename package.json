@@ -1,47 +1,32 @@
 {
   "name": "microservices-security",
   "version": "1.0.0",
-  "description": "Microservices security backend with authentication and authorization",
-  "main": "src/app.js",
+  "description": "Microservices security testing project",
+  "main": "index.js",
   "scripts": {
-    "start": "node src/app.js",
-    "dev": "nodemon src/app.js",
-    "test": "jest",
-    "lint": "eslint src/",
-    "security-scan": "npm audit && snyk test"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "security:dependency": "dependency-check . --project microservices-security",
+    "security:code": "eslint src/ tests/ --config .eslintrc.security.js",
+    "security:secrets": "gitleaks detect --source . --config .gitleaks.toml",
+    "security:vulnerability": "npm audit --audit-level=high"
   },
   "dependencies": {
     "express": "^4.18.2",
-    "jsonwebtoken": "^8.5.1",
-    "bcryptjs": "^2.4.3",
-    "helmet": "^6.1.5",
-    "cors": "^2.8.5",
-    "express-rate-limit": "^6.7.0",
-    "express-validator": "^6.15.0",
-    "mysql2": "^2.3.3",
-    "redis": "^4.6.7",
-    "winston": "^3.8.2",
-    "dotenv": "^16.0.3"
+    "lodash": "4.17.15", // Intentionally vulnerable version for testing
+    "mongoose": "^7.5.0",
+    "jsonwebtoken": "^9.0.2",
+    "bcryptjs": "^2.4.3"
   },
   "devDependencies": {
-    "jest": "^29.5.0",
-    "supertest": "^6.3.3",
-    "eslint": "^8.40.0",
-    "nodemon": "^2.0.22",
-    "snyk": "^1.1000.0"
+    "eslint": "^8.48.0",
+    "eslint-plugin-security": "^1.7.1",
+    "@typescript-eslint/parser": "^6.7.0"
   },
   "keywords": [
     "microservices",
     "security",
-    "authentication",
-    "authorization",
-    "jwt",
-    "express"
+    "testing"
   ],
-  "author": "Security Team",
-  "license": "MIT",
-  "engines": {
-    "node": ">=16.0.0",
-    "npm": ">=8.0.0"
-  }
+  "author": "smc1040937705",
+  "license": "MIT"
 }
