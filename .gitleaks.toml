@@ -1,0 +1,85 @@
+# Gitleaks configuration for secret detection
+version = "8.18.0"
+
+# Global settings
+[gitleaks]
+  # Exit code when leaks are found
+  exit-code = 1
+  
+  # Redact secrets from output
+  redact = false
+  
+  # Verbose output
+  verbose = false
+  
+  # Files to scan
+  path = "."
+
+# Rules for detecting secrets
+[[rules]]
+  id = "aws-access-key-id"
+  description = "AWS Access Key ID"
+  regex = '''(A3T[A-Z0-9]|AKIA|AGPA|AIDA|AROA|AIPA|ANPA|ANVA|ASIA)[A-Z0-9]{16}'''
+  tags = ["key", "AWS"]
+
+[[rules]]
+  id = "aws-secret-access-key"
+  description = "AWS Secret Access Key"
+  regex = '''(?i)aws(.{0,20})?['\"][0-9a-zA-Z/+]{40}['\"]'''
+  tags = ["key", "AWS"]
+
+[[rules]]
+  id = "github-pat"
+  description = "GitHub Personal Access Token"
+  regex = '''ghp_[0-9a-zA-Z]{36}'''
+  tags = ["key", "GitHub"]
+
+[[rules]]
+  id = "github-oauth"
+  description = "GitHub OAuth Access Token"
+  regex = '''gho_[0-9a-zA-Z]{36}'''
+  tags = ["key", "GitHub"]
+
+[[rules]]
+  id = "slack-token"
+  description = "Slack Token"
+  regex = '''xox[baprs]-([0-9a-zA-Z-]{10,48})?'''
+  tags = ["key", "Slack"]
+
+[[rules]]
+  id = "stripe-secret-key"
+  description = "Stripe Secret Key"
+  regex = '''sk_(test|live)_[0-9a-zA-Z]{24}'''
+  tags = ["key", "Stripe"]
+
+[[rules]]
+  id = "jwt-base64"
+  description = "JWT Token"
+  regex = '''eyJ[A-Za-z0-9_-]*\.[A-Za-z0-9._-]*'''
+  tags = ["key", "JWT"]
+
+[[rules]]
+  id = "generic-api-key"
+  description = "Generic API Key"
+  regex = '''[a-zA-Z0-9]{32,}'''
+  tags = ["key", "generic"]
+
+# Allow list for false positives
+[allowlist]
+  paths = [
+    "package-lock.json",
+    "yarn.lock",
+    "*.min.js",
+    "*.bundle.js"
+  ]
+  
+  commits = [
+    "^commit-sha$"
+  ]
+  
+  regexes = [
+    "example.*key",
+    "test.*key",
+    "fake.*key",
+    "dummy.*key"
+  ]
