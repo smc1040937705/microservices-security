@@ -1,47 +1,38 @@
 {
   "name": "microservices-security",
   "version": "1.0.0",
-  "description": "Microservices security backend with authentication and authorization",
-  "main": "src/app.js",
+  "description": "Microservices security scanning automation",
+  "main": "index.js",
   "scripts": {
-    "start": "node src/app.js",
-    "dev": "nodemon src/app.js",
     "test": "jest",
-    "lint": "eslint src/",
-    "security-scan": "npm audit && snyk test"
+    "lint": "eslint src/ tests/",
+    "security-scan": "npm audit --audit-level=moderate"
   },
   "dependencies": {
-    "express": "^4.18.2",
-    "jsonwebtoken": "^8.5.1",
-    "bcryptjs": "^2.4.3",
-    "helmet": "^6.1.5",
-    "cors": "^2.8.5",
-    "express-rate-limit": "^6.7.0",
-    "express-validator": "^6.15.0",
-    "mysql2": "^2.3.3",
-    "redis": "^4.6.7",
-    "winston": "^3.8.2",
-    "dotenv": "^16.0.3"
+    "express": "4.16.0",  // 故意使用有漏洞的旧版本
+    "lodash": "4.17.10",  // 包含已知漏洞的版本
+    "mongoose": "5.2.0",   // 有安全问题的版本
+    "jsonwebtoken": "8.1.0" // 包含安全漏洞的版本
   },
   "devDependencies": {
-    "jest": "^29.5.0",
-    "supertest": "^6.3.3",
-    "eslint": "^8.40.0",
-    "nodemon": "^2.0.22",
-    "snyk": "^1.1000.0"
+    "jest": "^27.0.0",
+    "eslint": "^8.0.0",
+    "eslint-plugin-security": "^1.4.0",
+    "md5": "^2.2.1"  // 不安全的加密库
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/smc1040937705/microservices-security.git"
   },
   "keywords": [
-    "microservices",
     "security",
-    "authentication",
-    "authorization",
-    "jwt",
-    "express"
+    "microservices",
+    "scanning",
+    "automation"
   ],
   "author": "Security Team",
-  "license": "MIT",
-  "engines": {
-    "node": ">=16.0.0",
-    "npm": ">=8.0.0"
-  }
+  "license": "MIT"
 }
